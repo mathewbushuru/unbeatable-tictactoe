@@ -22,27 +22,25 @@ h6 {
 }
 h1 {
   font-size: 36px;
+  text-align: center;
   margin: 24px 0;
 }
 h3 {
-  font-size: 24px;
+  font-size: 20px;
   margin: 12px 0;
 }
 #main {
-  border: 1px solid red;
   height: 100%;
   position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
-/* #main > * {
-  border: 1px solid blue;
-} */
 .playerCard {
-  background-color: #666;
   height: 25%;
   width: 60%;
+  border: 2px solid #000;
+  border-radius: 20px;
 }
 button {
   border: 1px solid #000;
@@ -51,21 +49,64 @@ button {
   padding: 8px 18px;
   font: inherit;
   background-color: inherit;
-  width: -moz-fit-content;
-  width: fit-content;
+  cursor: pointer;
+  white-space: nowrap;
 }
-.source{
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    padding: 8px 0;
-    text-align: center;
-    background-color: #000;
-    color: #fff;
+button:hover {
+  border-width: 2px;
+  padding: 12px 18px;
+}
+.source {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  padding: 12px 0;
+  text-align: center;
+  font-size: 16px;
+  background-color: #000;
+  color: #fff;
 }
 
-@media screen and (min-width: 500px) {
+@media screen and (min-width: 800px) {
   h1 {
     font-size: 48px;
+  }
+  #main {
+    display: grid;
+    grid-template-columns: 1fr 250px 1fr;
+    grid-template-rows: 200px repeat(3, 1fr);
+    align-items: center;
+    justify-items: center;
+  }
+  #main .title {
+    grid-column: 1/-1;
+    grid-row: 1/2;
+  }
+  #main .playerCard {
+    grid-row: 2/4;
+    height: 100%;
+    width: 60%;
+  }
+  #main .playerCard1 {
+    justify-self: end;
+    grid-column: 1/2;
+  }
+  #main .playerCard2 {
+    justify-self: start;
+    grid-column: -2/-1;
+  }
+  #main .vs,
+  #main .start {
+    grid-column: 2/3;
+  }
+  .vs{
+    align-self:end;
+  }
+  .start{
+    align-self:start;
+  }
+  button {
+    width: -moz-fit-content;
+    width: fit-content;
   }
 }

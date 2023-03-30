@@ -50,16 +50,16 @@ h3 {
   align-items: center;
   justify-content: space-between;
 }
-.playerCard img{
-    height: 60%;
+.playerCard img {
+  height: 40%;
 }
-.playerCard .cardChoice{
-    padding: 8px 0;
-    background-color: #000;
-    color: #fff;
-    width: 100%;
-    border-bottom-left-radius: 16px;
-    border-bottom-right-radius: 16px;
+.playerCard .cardChoice {
+  padding: 4px 0;
+  background-color: #000;
+  color: #fff;
+  width: 100%;
+  border-bottom-left-radius: 16px;
+  border-bottom-right-radius: 16px;
 }
 button {
   border: 1px solid #000;
@@ -76,7 +76,7 @@ button {
   position: absolute;
   bottom: 0;
   width: 100%;
-  padding: 12px 0;
+  padding: 6px 0;
   text-align: center;
   font-size: 16px;
   background-color: #000;
@@ -86,15 +86,16 @@ button {
   align-items: center;
   gap: 4px;
 }
-.source span{
-    cursor: pointer;
+.source span {
+  cursor: pointer;
 }
-.source img{
-    height: 25px;
+.source img {
+  height: 25px;
 }
-a,a:visited{
-    text-decoration: none;
-    color: inherit;
+a,
+a:visited {
+  text-decoration: none;
+  color: inherit;
 }
 
 @media screen and (min-width: 800px) {
@@ -144,7 +145,13 @@ a,a:visited{
     border-width: 2px;
     padding: 12px 18px;
   }
-  .playerCard img{
+  .playerCard img {
     height: 55%;
-}
+  }
+  .playerCard .cardChoice {
+    padding: 8px 0;
+  }
+  .source{
+    padding: 12px 0;
+  }
 }

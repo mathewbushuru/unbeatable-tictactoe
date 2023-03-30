@@ -6,6 +6,7 @@ body {
     sans-serif;
   font-size: 18px;
   background-color: #fff;
+  color: #000;
   height: 100vh;
   height: 100svh;
   overflow: hidden;
@@ -37,7 +38,7 @@ h3 {
   align-items: center;
 }
 .playerCard {
-  height: 25%;
+  height: 20%;
   width: 60%;
   border: 2px solid #000;
   border-radius: 20px;
@@ -49,12 +50,9 @@ button {
   padding: 8px 18px;
   font: inherit;
   background-color: inherit;
+  color: inherit;
   cursor: pointer;
   white-space: nowrap;
-}
-button:hover {
-  border-width: 2px;
-  padding: 12px 18px;
 }
 .source {
   position: absolute;
@@ -99,14 +97,18 @@ button:hover {
   #main .start {
     grid-column: 2/3;
   }
-  .vs{
-    align-self:end;
+  .vs {
+    align-self: end;
   }
-  .start{
-    align-self:start;
+  .start {
+    align-self: start;
   }
   button {
     width: -moz-fit-content;
     width: fit-content;
+  }
+  button:hover {
+    border-width: 2px;
+    padding: 12px 18px;
   }
 }

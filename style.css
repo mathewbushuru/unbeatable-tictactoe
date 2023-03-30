@@ -81,6 +81,20 @@ button {
   font-size: 16px;
   background-color: #000;
   color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+}
+.source span{
+    cursor: pointer;
+}
+.source img{
+    height: 25px;
+}
+a,a:visited{
+    text-decoration: none;
+    color: inherit;
 }
 
 @media screen and (min-width: 800px) {

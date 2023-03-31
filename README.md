@@ -1,6 +1,6 @@
 ### Tic Tac Toe
 
-This project uses the `module pattern`. I recently learnt about it and decided to make this simple project using it. [The module pattern](https://dev.to/tomekbuszewski/module-pattern-in-javascript-56jm) allows us to use and create encapsulation in our code like if we were using a language like Java. Note that this module pattern is different from the modules introduced by ES6.
+This project uses the `module pattern`. I recently learnt about it and made this simple project using it. [The module pattern](https://dev.to/tomekbuszewski/module-pattern-in-javascript-56jm) allows us to use and create encapsulation in our code like if we were using a language like Java. Note that this module pattern is different from the modules introduced by ES6.
 
 
 ##### Design

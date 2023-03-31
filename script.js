@@ -43,8 +43,6 @@ const GameControls = (() => {
     if (_randomSquare.className !== "gameSquare squareFilled") {
       let _randomSquareId = _randomSquare.getAttribute("data-id");
       boardArr[+_randomSquareId] = "O";
-      // TODO: remove
-      console.log(boardArr);
       _randomSquare.textContent = "O";
       _randomSquare.className += " squareFilled";
       if (_checkWinner("O") === "O") {
@@ -67,8 +65,6 @@ const GameControls = (() => {
         if (_gameSquare.className !== "gameSquare squareFilled") {
           let _gameSquareId = _gameSquare.getAttribute("data-id");
           boardArr[+_gameSquareId] = "X";
-          // TODO: remove
-          console.log(boardArr);
           _gameSquare.textContent = "X";
           _gameSquare.className += " squareFilled";
           if (_checkWinner("X") === "X") {
@@ -85,10 +81,7 @@ const GameControls = (() => {
     });
   };
 
-  const startGame = () => {
-    GameCanvas.clearCanvas();
-    GameCanvas.canvas.innerHTML = gameDisplayCode;
-
+  const _startGame = () => {
     Render.renderBoard();
 
     _addGameListeners();
@@ -106,10 +99,10 @@ const GameControls = (() => {
 
   const addIntroListeners = () => {
     const _startGameButton = document.getElementById("startGameBtn");
-    _startGameButton.addEventListener("click", startGame);
+    _startGameButton.addEventListener("click", _startGame);
   };
 
-  return { startGame, addIntroListeners };
+  return { addIntroListeners };
 })();
 
 const Render = (() => {
@@ -119,6 +112,9 @@ const Render = (() => {
   };
 
   const renderBoard = () => {
+    GameCanvas.clearCanvas();
+    GameCanvas.canvas.innerHTML = gameDisplayCode;
+
     const _gameBoard = document.getElementById("gameBoard");
     for (let i = 0; i < boardArr.length; i++) {
       if (boardArr[i]) {

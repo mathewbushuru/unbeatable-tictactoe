@@ -17,15 +17,16 @@ const GameControls = (() => {
   const startGame = () => {
     GameCanvas.clearCanvas();
     GameCanvas.canvas.innerHTML = gameDisplayCode;
-    _addGameListeners()
+
+    Render.renderBoard();
+
+    _addGameListeners();
   };
 
   const addIntroListeners = () => {
     const _startGameButton = document.getElementById("startGameBtn");
     _startGameButton.addEventListener("click", startGame);
   };
-
-  addIntroListeners();
 
   return { startGame, addIntroListeners };
 })();
@@ -35,7 +36,26 @@ const Render = (() => {
     GameCanvas.canvas.innerHTML = introDisplayCode;
     GameControls.addIntroListeners();
   };
-  return { renderIntro };
+
+  const renderBoard = () => {
+    const _gameBoard = document.getElementById("gameBoard");
+    for (let i = 0; i < 9; i++) {
+      _gameBoard.innerHTML += "<div class='gameSquare'></div>";
+    }
+
+    const _gameSquares = document.querySelectorAll(".gameSquare");
+    _gameSquares.forEach((_gameSquare) => {
+      _gameSquare.addEventListener("click", () => {
+        _gameSquare.textContent = "X";
+        _gameSquare.className += " squareFilled";
+      });
+    });
+  };
+
+  return { renderIntro, renderBoard };
 })();
 
-const GameBoard = () => {};
+// Entry point to start application
+const Init = (() => {
+  GameControls.addIntroListeners();
+})();

@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Rock+Salt&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Rock+Salt&display=swap');
 body {
   margin: 0;
   padding: 0;
@@ -27,8 +27,8 @@ h1 {
   text-align: center;
   margin: 18px 0 12px 0;
 }
-h1.gameTitle{
-    font-size: 30px;
+h1.gameTitle {
+  font-size: 30px;
 }
 h3 {
   font-size: 20px;
@@ -63,6 +63,32 @@ h3 {
   width: 100%;
   border-bottom-left-radius: 16px;
   border-bottom-right-radius: 16px;
+}
+#gameBoard {
+  width: min(300px, 75%);
+  height: min(300px, 60%);
+  border: 1px solid #666;
+  border-radius: 12px;
+  padding: 12px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  justify-items: center;
+  align-items: center;
+  gap: 12px;
+}
+#gameBoard .gameSquare {
+  border: 1px solid #666;
+  border-radius: 8px;
+  width: 100%;
+  height: 100%;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 32px;
+  color: #333;
+  text-transform: uppercase;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 button {
   border: 1px solid #000;
@@ -106,6 +132,9 @@ a:visited {
     font-size: 48px;
     margin: 24px 0;
   }
+  h1.gameTitle {
+    font-size: 40px;
+  }
   #main {
     display: grid;
     grid-template-columns: 1fr 250px 1fr;
@@ -133,6 +162,21 @@ a:visited {
   #main .vs,
   #main .start {
     grid-column: 2/3;
+  }
+  #main #gameBoard {
+    align-self: start;
+    width: min(300px, 70%);
+    height: min(300px, 70%);
+    grid-column: 1/-1;
+    grid-row: 2/4;
+  }
+  #gameBoard .gameSquare:hover {
+    background-color: #ddd;
+    cursor: pointer;
+  }
+  #gameBoard .gameSquare.squareFilled{
+    cursor: not-allowed;
+    background-color: #fff;
   }
   .vs {
     align-self: end;

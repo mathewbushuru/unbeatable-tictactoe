@@ -22,6 +22,18 @@ const GameControls = (() => {
         return player;
       }
     }
+
+    let i = 0;
+    while (i < boardArr.length) {
+      if (boardArr[i] === null) {
+        return null;
+      }
+      i++;
+    }
+    if (i === boardArr.length) {
+      return "draw";
+    }
+
     return null;
   };
 
@@ -35,9 +47,11 @@ const GameControls = (() => {
       console.log(boardArr);
       _randomSquare.textContent = "O";
       _randomSquare.className += " squareFilled";
-        if (_checkWinner("O")==="O") {
-          _endGame();
-        }
+      if (_checkWinner("O") === "O") {
+        _endGame("Bot ( O ) won");
+      } else if (_checkWinner("O") === "draw") {
+        _endGame("It's a draw");
+      }
     } else {
       _botPlayRandom();
     }
@@ -58,11 +72,13 @@ const GameControls = (() => {
           _gameSquare.textContent = "X";
           _gameSquare.className += " squareFilled";
           if (_checkWinner("X") === "X") {
-            _endGame();
+            _endGame("Player ( X ) won");
+          } else if (_checkWinner("X") === "draw") {
+            _endGame("It's a draw");
           } else {
             setTimeout(() => {
               _botPlayRandom();
-            }, 200);
+            }, BOT_TURN_DELAY);
           }
         }
       });
@@ -78,8 +94,14 @@ const GameControls = (() => {
     _addGameListeners();
   };
 
-  const _endGame = () => {
-    Render.renderIntro();
+  const _endGame = (endMessage) => {
+    const _modalDiv = document.getElementById("modal");
+    _modalDiv.textContent = endMessage;
+    _modalDiv.style.display = "flex";
+    setTimeout(() => {
+      _modalDiv.style.display = "none";
+      Render.renderIntro();
+    }, RESTART_GAME_DELAY);
   };
 
   const addIntroListeners = () => {

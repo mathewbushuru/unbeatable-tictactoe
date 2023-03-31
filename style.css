@@ -66,7 +66,8 @@ h3 {
 }
 #gameBoard {
   width: min(300px, 75%);
-  height: min(300px, 60%);
+  /* height: min(300px, 60%); */
+  aspect-ratio: 1;
   border: 1px solid #666;
   border-radius: 12px;
   padding: 12px;
@@ -166,7 +167,8 @@ a:visited {
   #main #gameBoard {
     align-self: start;
     width: min(300px, 70%);
-    height: min(300px, 70%);
+    /* height: min(300px, 70%); */
+    aspect-ratio: 1;
     grid-column: 1/-1;
     grid-row: 2/4;
   }

@@ -3,3 +3,21 @@ const introDisplayCode =
 
 const gameDisplayCode =
   '<h1 class="title gameTitle">Player Vs Bot</h1><div id="gameBoard"></div><button class="start" id="restartGameBtn">Restart game</button><div class="source"><span> <a href="https://github.com/mathewbushuru/tic-tac-toe-vanillajs" target="_blank" rel="noopener noreferrer" >Source</a></span><img src="assets/github.png" alt="github-source" /></div>';
+
+/**
+ *  0 1 2
+ *  3 4 5
+ *  6 7 8
+ */
+let boardArr = new Array(9).fill(null);
+
+const winningCombs = [
+  [0, 1, 2],
+  [3, 4, 5],
+  [6, 7, 8],
+  [0, 3, 6],
+  [1, 4, 7],
+  [2, 5, 8],
+  [0, 4, 8],
+  [2, 4, 6],
+];

@@ -1,7 +1,10 @@
+"use strict";
+
 const GameCanvas = (() => {
   const canvas = document.getElementById("main");
 
   const clearCanvas = () => {
+    boardArr = new Array(9).fill(null);
     canvas.innerHTML = "";
   };
 
@@ -9,12 +12,32 @@ const GameCanvas = (() => {
 })();
 
 const GameControls = (() => {
+  const _checkWinner = (player) => {
+    for (let option of winningCombs) {
+      if (
+        boardArr[option[0]] === player &&
+        boardArr[option[1]] === player &&
+        boardArr[option[2]] === player
+      ) {
+        return player;
+      }
+    }
+    return null;
+  };
+
   const _botPlayRandom = () => {
     const _gameSquares = document.querySelectorAll(".gameSquare");
     const _randomSquare = _gameSquares[Math.floor(Math.random() * 9)];
     if (_randomSquare.className !== "gameSquare squareFilled") {
+      let _randomSquareId = _randomSquare.getAttribute("data-id");
+      boardArr[+_randomSquareId] = "O";
+      // TODO: remove
+      console.log(boardArr);
       _randomSquare.textContent = "O";
       _randomSquare.className += " squareFilled";
+        if (_checkWinner("O")==="O") {
+          _endGame();
+        }
     } else {
       _botPlayRandom();
     }
@@ -28,11 +51,19 @@ const GameControls = (() => {
     _gameSquares.forEach((_gameSquare) => {
       _gameSquare.addEventListener("click", () => {
         if (_gameSquare.className !== "gameSquare squareFilled") {
+          let _gameSquareId = _gameSquare.getAttribute("data-id");
+          boardArr[+_gameSquareId] = "X";
+          // TODO: remove
+          console.log(boardArr);
           _gameSquare.textContent = "X";
           _gameSquare.className += " squareFilled";
-          setTimeout(() => {
-            _botPlayRandom();
-          }, 200);
+          if (_checkWinner("X") === "X") {
+            _endGame();
+          } else {
+            setTimeout(() => {
+              _botPlayRandom();
+            }, 200);
+          }
         }
       });
     });
@@ -45,6 +76,10 @@ const GameControls = (() => {
     Render.renderBoard();
 
     _addGameListeners();
+  };
+
+  const _endGame = () => {
+    Render.renderIntro();
   };
 
   const addIntroListeners = () => {
@@ -63,8 +98,12 @@ const Render = (() => {
 
   const renderBoard = () => {
     const _gameBoard = document.getElementById("gameBoard");
-    for (let i = 0; i < 9; i++) {
-      _gameBoard.innerHTML += "<div class='gameSquare'></div>";
+    for (let i = 0; i < boardArr.length; i++) {
+      if (boardArr[i]) {
+        _gameBoard.innerHTML += `<div class='gameSquare' data-id='${i}'>${boardArr[i]}</div>`;
+      } else {
+        _gameBoard.innerHTML += `<div class='gameSquare' data-id='${i}'></div>`;
+      }
     }
   };
 

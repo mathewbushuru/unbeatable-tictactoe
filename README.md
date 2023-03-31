@@ -14,7 +14,7 @@ The [minmax algorithm](https://en.wikipedia.org/wiki/Minimax) always selects the
 - Evaluate the payoff values for each empty box if either an 'X' or 'O' is placed there.
 - Play the next move that guarantees the bot wins, or prevents the user from winning.
 
-For the trivial bot's random algorithm, it randomly plays a randomly available empty box.
+See the minmax implementation in the `_botPlayMinmax` method of the `GameControls` module. For the trivial bot's random algorithm, it randomly plays a randomly available empty box.
 
 ### Design
 I have been experimenting with achromatic designs a lot lately so this is another black and white design. It's mobile responsive and uses a flex column for mobile which changes to a CSS Grid for viewports greater than 750px.

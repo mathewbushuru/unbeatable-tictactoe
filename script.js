@@ -112,10 +112,6 @@ const GameControls = (() => {
       _winResultX = _checkWinner("X", _boardArrCopy);
       if (_winResult === "O" || _winResultX === "X") {
         _payoffsArr[id] = 10;
-      } else if (_winResult === "X") {
-        _payoffsArr[id] = -10;
-      } else if (_winResult === "draw") {
-        _payoffsArr[id] = 0;
       } else {
         _payoffsArr[id] = null;
       }

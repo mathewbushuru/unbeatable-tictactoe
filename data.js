@@ -1,12 +1,6 @@
 const RESTART_GAME_DELAY = 1000;
 const BOT_TURN_DELAY = 200;
 let ADVANCED_MODE = true;
-
-/**
- *  0 1 2
- *  3 4 5
- *  6 7 8
- */
 let boardArr = new Array(9).fill(null);
 
 const winningCombs = [

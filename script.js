@@ -12,25 +12,25 @@ const GameCanvas = (() => {
 })();
 
 const GameControls = (() => {
-  const _checkWinner = (player) => {
+  const _checkWinner = (player, board = boardArr) => {
     for (let option of winningCombs) {
       if (
-        boardArr[option[0]] === player &&
-        boardArr[option[1]] === player &&
-        boardArr[option[2]] === player
+        board[option[0]] === player &&
+        board[option[1]] === player &&
+        board[option[2]] === player
       ) {
         return player;
       }
     }
 
     let i = 0;
-    while (i < boardArr.length) {
-      if (boardArr[i] === null) {
+    while (i < board.length) {
+      if (board[i] === null) {
         return null;
       }
       i++;
     }
-    if (i === boardArr.length) {
+    if (i === board.length) {
       return "draw";
     }
 
@@ -55,9 +55,70 @@ const GameControls = (() => {
     }
   };
 
+  const _botPlayMinmax = () => {
+    const _allSquares = document.querySelectorAll(".gameSquare");
+    const _emptySquares = [..._allSquares].filter((square) => {
+      return square.className !== "gameSquare squareFilled";
+    });
+    const _emptySquaresIds = _emptySquares.map((square) =>
+      square.getAttribute("data-id")
+    );
+    console.log(_emptySquaresIds);
+    const _payoffsArr = new Array(9).fill(null);
+    let _winResult, _winResultX;
+    for (let id of _emptySquaresIds) {
+      const _boardArrCopy = [...boardArr];
+      _boardArrCopy[id] = "O";
+      _winResult = _checkWinner("O", _boardArrCopy);
+      _boardArrCopy[id] = "X";
+      _winResultX = _checkWinner("X", _boardArrCopy);
+      if (_winResult === "O" || _winResultX === "X") {
+        _payoffsArr[id] = 10;
+      } else if (_winResult === "X") {
+        _payoffsArr[id] = -10;
+      } else if (_winResult === "draw") {
+        _payoffsArr[id] = 0;
+      } else {
+        _payoffsArr[id] = null;
+      }
+    }
+    let _idx = 0;
+
+    for (let i = 0; i < _payoffsArr.length; i++) {
+      if (_payoffsArr[i] === 10) {
+        boardArr[i] = "O";
+        _allSquares[i].textContent = "O";
+        _allSquares[i].className += " squareFilled";
+        if (_checkWinner("O") === "O") {
+          _endGame("Bot ( O ) won");
+        } else if (_checkWinner("O") === "draw") {
+          _endGame("It's a draw");
+        }
+        break;
+      }
+      _idx++;
+    }
+    if (_idx === 9) {
+      let _randomIdx = Math.floor(Math.random() * _emptySquaresIds.length);
+      _randomIdx = _emptySquaresIds[_randomIdx];
+      boardArr[_randomIdx] = "O";
+      _allSquares[_randomIdx].textContent = "O";
+      _allSquares[_randomIdx].className += " squareFilled";
+      if (_checkWinner("O") === "O") {
+        _endGame("Bot ( O ) won");
+      } else if (_checkWinner("O") === "draw") {
+        _endGame("It's a draw");
+      }
+    }
+    console.log(_payoffsArr);
+  };
+
   const _addGameListeners = () => {
     const _restartGameBtn = document.getElementById("restartGameBtn");
-    _restartGameBtn.addEventListener("click", () => Render.renderIntro());
+    _restartGameBtn.addEventListener("click", () => {
+      ADVANCED_MODE = true;
+      Render.renderIntro();
+    });
 
     const _gameSquares = document.querySelectorAll(".gameSquare");
     _gameSquares.forEach((_gameSquare) => {
@@ -73,7 +134,7 @@ const GameControls = (() => {
             _endGame("It's a draw");
           } else {
             setTimeout(() => {
-              _botPlayRandom();
+              ADVANCED_MODE ? _botPlayMinmax() : _botPlayRandom();
             }, BOT_TURN_DELAY);
           }
         }
@@ -87,7 +148,7 @@ const GameControls = (() => {
     _addGameListeners();
   };
 
-  const _endGame = (endMessage) => {
+  const _endGameDisplay = (endMessage) => {
     const _modalDiv = document.getElementById("modal");
     _modalDiv.textContent = endMessage;
     _modalDiv.style.display = "flex";
@@ -95,6 +156,12 @@ const GameControls = (() => {
       _modalDiv.style.display = "none";
       Render.renderIntro();
     }, RESTART_GAME_DELAY);
+  };
+
+  const _endGame = (endMessage) => {
+    setTimeout(() => {
+      _endGameDisplay(endMessage);
+    }, 0);
   };
 
   const addIntroListeners = () => {
@@ -109,11 +176,13 @@ const GameControls = (() => {
       if (_botType === "advanced") {
         _botCard.setAttribute("data-choice", "trivial");
         _botImg.setAttribute("src", "assets/personal-droid.png");
-        _botTypeText.textContent="Trivial Bot"
+        _botTypeText.textContent = "Trivial Bot";
+        ADVANCED_MODE = false;
       } else {
         _botCard.setAttribute("data-choice", "advanced");
         _botImg.setAttribute("src", "assets/r2d2.png");
-        _botTypeText.textContent="Advanced Bot "
+        _botTypeText.textContent = "Advanced Bot ";
+        ADVANCED_MODE = true;
       }
     });
   };

@@ -132,9 +132,9 @@ a:visited {
   -webkit-backdrop-filter: blur(20px);
   backdrop-filter: blur(20px);
   width: 100%;
-  aspect-ratio: 2/3;
+  aspect-ratio: 1/2;
   position: fixed;
-  top: 10%;
+  top: 12%;
   font-family: "Rock Salt", cursive;
   font-size: 24px;
   font-weight: 700;

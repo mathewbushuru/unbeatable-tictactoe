@@ -9,9 +9,31 @@ const GameCanvas = (() => {
 })();
 
 const GameControls = (() => {
+  const _botPlayRandom = () => {
+    const _gameSquares = document.querySelectorAll(".gameSquare");
+    const _randomSquare = _gameSquares[Math.floor(Math.random() * 9)];
+    if (_randomSquare.className !== "gameSquare squareFilled") {
+      _randomSquare.textContent = "O";
+      _randomSquare.className += " squareFilled";
+    } else {
+      _botPlayRandom();
+    }
+  };
+
   const _addGameListeners = () => {
     const _restartGameBtn = document.getElementById("restartGameBtn");
     _restartGameBtn.addEventListener("click", () => Render.renderIntro());
+
+    const _gameSquares = document.querySelectorAll(".gameSquare");
+    _gameSquares.forEach((_gameSquare) => {
+      _gameSquare.addEventListener("click", () => {
+        if (_gameSquare.className !== "gameSquare squareFilled") {
+          _gameSquare.textContent = "X";
+          _gameSquare.className += " squareFilled";
+          _botPlayRandom();
+        }
+      });
+    });
   };
 
   const startGame = () => {
@@ -42,14 +64,6 @@ const Render = (() => {
     for (let i = 0; i < 9; i++) {
       _gameBoard.innerHTML += "<div class='gameSquare'></div>";
     }
-
-    const _gameSquares = document.querySelectorAll(".gameSquare");
-    _gameSquares.forEach((_gameSquare) => {
-      _gameSquare.addEventListener("click", () => {
-        _gameSquare.textContent = "X";
-        _gameSquare.className += " squareFilled";
-      });
-    });
   };
 
   return { renderIntro, renderBoard };

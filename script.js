@@ -30,7 +30,9 @@ const GameControls = (() => {
         if (_gameSquare.className !== "gameSquare squareFilled") {
           _gameSquare.textContent = "X";
           _gameSquare.className += " squareFilled";
-          _botPlayRandom();
+          setTimeout(() => {
+            _botPlayRandom();
+          }, 200);
         }
       });
     });

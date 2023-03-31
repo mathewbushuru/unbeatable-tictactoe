@@ -210,6 +210,10 @@ a:visited {
     border-width: 2px;
     padding: 12px 18px;
   }
+  .playerCard2:hover{
+    cursor: pointer;
+    background-color: rgba(0,0,0,0.05);
+}
   .playerCard img {
     height: 55%;
   }

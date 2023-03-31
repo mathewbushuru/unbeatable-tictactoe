@@ -100,6 +100,22 @@ const GameControls = (() => {
   const addIntroListeners = () => {
     const _startGameButton = document.getElementById("startGameBtn");
     _startGameButton.addEventListener("click", _startGame);
+
+    const _botCard = document.querySelector(".playerCard2");
+    _botCard.addEventListener("click", () => {
+      const _botImg = document.querySelector(".botImage");
+      const _botType = _botCard.getAttribute("data-choice");
+      const _botTypeText = document.querySelector(".cardChoiceBot");
+      if (_botType === "advanced") {
+        _botCard.setAttribute("data-choice", "trivial");
+        _botImg.setAttribute("src", "assets/personal-droid.png");
+        _botTypeText.textContent="Trivial Bot"
+      } else {
+        _botCard.setAttribute("data-choice", "advanced");
+        _botImg.setAttribute("src", "assets/r2d2.png");
+        _botTypeText.textContent="Advanced Bot "
+      }
+    });
   };
 
   return { addIntroListeners };

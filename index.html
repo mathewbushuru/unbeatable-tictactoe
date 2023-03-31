@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-
     <div id="main">
       <h1 class="title">Tic Tac Toe</h1>
       <div class="playerCard playerCard1">
@@ -17,10 +16,10 @@
         <div class="cardChoice">Player</div>
       </div>
       <h3 class="vs">VS</h3>
-      <div class="playerCard playerCard2">
+      <div data-choice="advanced" class="playerCard playerCard2">
         <h4 class="cardTitle">O</h4>
-        <img src="assets/r2d2.png" alt="player-icon" />
-        <div class="cardChoice">Bot</div>
+        <img src="assets/r2d2.png" alt="player-icon" class="botImage" />
+        <div class="cardChoice cardChoiceBot">Advanced Bot</div>
       </div>
       <button class="start" id="startGameBtn">Start game</button>
 

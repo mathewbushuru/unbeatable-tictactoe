@@ -55,7 +55,44 @@ const GameControls = (() => {
     }
   };
 
+  const _minimaxAlg = (board, maximizingBot = true) => {
+    const _winner = _checkWinner(maximizingBot ? "O" : "X", board);
+
+    if (_winner === "O") return maximizingBot ? 10 : -10;
+    else if (_winner === "X") return maximizingBot ? -10 : 10;
+    else if (_winner === "draw") return 0;
+
+    const _moves = [];
+    for (let i = 0; i < board.length; i++) {
+      if (board[i] === null) {
+        const boardCpy = [...board];
+        boardCpy[i] = maximizingBot ? "O" : "X";
+        const _score = _minimaxAlg(boardCpy, !maximizingBot);
+        _moves.push({ index: i, score: _score });
+      }
+    }
+
+    const _bestMove = _moves.reduce(
+      (prev, curr) => {
+        return maximizingBot
+          ? curr.score > prev.score
+            ? curr
+            : prev
+          : curr.score < prev.score
+          ? curr
+          : prev;
+      },
+      {
+        index: -1,
+        score: maximizingBot ? -Infinity : Infinity,
+      }
+    );
+
+    return _bestMove.score;
+  };
+
   const _botPlayMinmax = () => {
+    //first check  if there is an immediate win or loss in any next available move
     const _allSquares = document.querySelectorAll(".gameSquare");
     const _emptySquares = [..._allSquares].filter((square) => {
       return square.className !== "gameSquare squareFilled";
@@ -63,9 +100,10 @@ const GameControls = (() => {
     const _emptySquaresIds = _emptySquares.map((square) =>
       square.getAttribute("data-id")
     );
-    console.log(_emptySquaresIds);
+
     const _payoffsArr = new Array(9).fill(null);
     let _winResult, _winResultX;
+
     for (let id of _emptySquaresIds) {
       const _boardArrCopy = [...boardArr];
       _boardArrCopy[id] = "O";
@@ -82,8 +120,8 @@ const GameControls = (() => {
         _payoffsArr[id] = null;
       }
     }
-    let _idx = 0;
 
+    let _idx = 0;
     for (let i = 0; i < _payoffsArr.length; i++) {
       if (_payoffsArr[i] === 10) {
         boardArr[i] = "O";
@@ -99,18 +137,31 @@ const GameControls = (() => {
       _idx++;
     }
     if (_idx === 9) {
-      let _randomIdx = Math.floor(Math.random() * _emptySquaresIds.length);
-      _randomIdx = _emptySquaresIds[_randomIdx];
-      boardArr[_randomIdx] = "O";
-      _allSquares[_randomIdx].textContent = "O";
-      _allSquares[_randomIdx].className += " squareFilled";
+      // No immediate win or loss possibility
+      // Hence do recursive minmax check for best play considering all game possibilities
+      let _bestScore = -Infinity;
+      let _bestMove = -1;
+      for (let i = 0; i < boardArr.length; i++) {
+        if (boardArr[i] === null) {
+          const _boardCpy = [...boardArr];
+          _boardCpy[i] = "O";
+          const _score = _minimaxAlg(_boardCpy, true);
+          if (_score > _bestScore) {
+            _bestScore = _score;
+            _bestMove = i;
+          }
+        }
+      }
+
+      boardArr[_bestMove] = "O";
+      _allSquares[_bestMove].textContent = "O";
+      _allSquares[_bestMove].className += " squareFilled";
       if (_checkWinner("O") === "O") {
         _endGame("Bot ( O ) won");
       } else if (_checkWinner("O") === "draw") {
         _endGame("It's a draw");
       }
     }
-    console.log(_payoffsArr);
   };
 
   const _addGameListeners = () => {

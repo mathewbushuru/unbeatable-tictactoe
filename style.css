@@ -135,6 +135,7 @@ a:visited {
   aspect-ratio: 1/2;
   position: fixed;
   top: 12%;
+  bottom: 0;
   font-family: "Rock Salt", cursive;
   font-size: 24px;
   font-weight: 700;

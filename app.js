@@ -19,22 +19,22 @@ const GameControls = (() => {
         board[option[1]] === player &&
         board[option[2]] === player
       ) {
-        return player;
+        return { winningPlayer: player, winningRow: option };
       }
     }
 
     let i = 0;
     while (i < board.length) {
       if (board[i] === null) {
-        return null;
+        return { winningPlayer: null, winningRow: null };
       }
       i++;
     }
     if (i === board.length) {
-      return "draw";
+      return { winningPlayer: "draw", winningRow: null };
     }
 
-    return null;
+    return { winningPlayer: null, winningRow: null };
   };
 
   const _botPlayRandom = () => {
@@ -45,9 +45,9 @@ const GameControls = (() => {
       boardArr[+_randomSquareId] = "O";
       _randomSquare.textContent = "O";
       _randomSquare.className += " squareFilled";
-      if (_checkWinner("O") === "O") {
-        _endGame("Bot ( O ) won");
-      } else if (_checkWinner("O") === "draw") {
+      if (_checkWinner("O").winningPlayer === "O") {
+        _endGame("Bot ( O ) won", _checkWinner("O").winningRow);
+      } else if (_checkWinner("O").winningPlayer === "draw") {
         _endGame("It's a draw");
       }
     } else {
@@ -56,7 +56,10 @@ const GameControls = (() => {
   };
 
   const _minimaxAlg = (board, maximizingBot = true) => {
-    const _winner = _checkWinner(maximizingBot ? "O" : "X", board);
+    const _winner = _checkWinner(
+      maximizingBot ? "O" : "X",
+      board
+    ).winningPlayer;
 
     if (_winner === "O") return maximizingBot ? 10 : -10;
     else if (_winner === "X") return maximizingBot ? -10 : 10;
@@ -107,9 +110,9 @@ const GameControls = (() => {
     for (let id of _emptySquaresIds) {
       const _boardArrCopy = [...boardArr];
       _boardArrCopy[id] = "O";
-      _winResult = _checkWinner("O", _boardArrCopy);
+      _winResult = _checkWinner("O", _boardArrCopy).winningPlayer;
       _boardArrCopy[id] = "X";
-      _winResultX = _checkWinner("X", _boardArrCopy);
+      _winResultX = _checkWinner("X", _boardArrCopy).winningPlayer;
       if (_winResult === "O" || _winResultX === "X") {
         _payoffsArr[id] = 10;
       } else {
@@ -123,9 +126,9 @@ const GameControls = (() => {
         boardArr[i] = "O";
         _allSquares[i].textContent = "O";
         _allSquares[i].className += " squareFilled";
-        if (_checkWinner("O") === "O") {
-          _endGame("Bot ( O ) won");
-        } else if (_checkWinner("O") === "draw") {
+        if (_checkWinner("O").winningPlayer === "O") {
+          _endGame("Bot ( O ) won", _checkWinner("O").winningRow);
+        } else if (_checkWinner("O").winningPlayer === "draw") {
           _endGame("It's a draw");
         }
         break;
@@ -152,9 +155,9 @@ const GameControls = (() => {
       boardArr[_bestMove] = "O";
       _allSquares[_bestMove].textContent = "O";
       _allSquares[_bestMove].className += " squareFilled";
-      if (_checkWinner("O") === "O") {
-        _endGame("Bot ( O ) won");
-      } else if (_checkWinner("O") === "draw") {
+      if (_checkWinner("O").winningPlayer === "O") {
+        _endGame("Bot ( O ) won", _checkWinner("O").winningRow);
+      } else if (_checkWinner("O").winningPlayer === "draw") {
         _endGame("It's a draw");
       }
     }
@@ -175,9 +178,9 @@ const GameControls = (() => {
           boardArr[+_gameSquareId] = "X";
           _gameSquare.textContent = "X";
           _gameSquare.className += " squareFilled";
-          if (_checkWinner("X") === "X") {
-            _endGame("Player ( X ) won");
-          } else if (_checkWinner("X") === "draw") {
+          if (_checkWinner("X").winningPlayer === "X") {
+            _endGame("Player ( X ) won", _checkWinner("X").winningRow);
+          } else if (_checkWinner("X").winningPlayer === "draw") {
             _endGame("It's a draw");
           } else {
             setTimeout(() => {
@@ -201,14 +204,29 @@ const GameControls = (() => {
     _modalDiv.style.display = "flex";
     setTimeout(() => {
       _modalDiv.style.display = "none";
+      ADVANCED_MODE = true;
       Render.renderIntro();
     }, RESTART_GAME_DELAY);
   };
 
-  const _endGame = (endMessage) => {
+  const _endGame = (endMessage, winningRow = null) => {
+    const _allSquares = document.querySelectorAll(".gameSquare");
+    if (winningRow === null) {
+      _allSquares.forEach((square) => {
+        square.style.backgroundColor = "#ffcc0099";
+      });
+    } else if (endMessage === "Player ( X ) won") {
+      for (let square of winningRow) {
+        _allSquares[square].style.backgroundColor = "#99cc3366";
+      }
+    } else {
+      for (let square of winningRow) {
+        _allSquares[square].style.backgroundColor = "#cc330099";
+      }
+    }
     setTimeout(() => {
       _endGameDisplay(endMessage);
-    }, 0);
+    }, RESTART_GAME_DELAY);
   };
 
   const addIntroListeners = () => {

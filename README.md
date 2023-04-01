@@ -1,4 +1,4 @@
-## Tic Tac Toe
+## Unbeatable Tic Tac Toe (Vanilla JS)
 
 This project uses the `module pattern`. I recently learnt about it and made this simple project using it. [The module pattern](https://dev.to/tomekbuszewski/module-pattern-in-javascript-56jm) allows us to use and create encapsulation in our code as if we were using a language like Java. For example, our `renderBoard` is accessible outside the `Render` module as `Render.renderBoard()` while `_gameBoard` is only  visible inside it. Note that this module pattern is different from the modules introduced by ES6.
 

@@ -2,7 +2,7 @@
 
 This project uses the `module pattern`. I recently learnt about it and made this simple project using it. [The module pattern](https://dev.to/tomekbuszewski/module-pattern-in-javascript-56jm) allows us to use and create encapsulation in our code as if we were using a language like Java. For example, our `renderBoard` is accessible outside the `Render` module as `Render.renderBoard()` while `_gameBoard` is only  visible inside it. Note that this module pattern is different from the modules introduced by ES6.
 
-For better user experience, the app is designed to be a Single Page Application like a  React/Vue app. The render methods manipulate the DOM dynamically when needed with no need for network reloads. Designing the app as an SPA also requires state management which is used for functionalities such as selected unbeatable/trivial difficulry, etc.
+For better user experience, the app is designed to be a Single Page Application like a  React/Vue app. The render methods manipulate the DOM dynamically when needed with no need for network reloads. Designing the app as an SPA also requires state management which enables us to have different difficulties, etc.
 
 ### Algorithm
 I designed two algorithms for the bot. A `minmax` algorithm for the unbeatable bot and a `random` algorithm for the trivial bot.
